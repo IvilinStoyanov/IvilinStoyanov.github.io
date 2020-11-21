@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-gallery',
@@ -6,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent implements OnInit {
+  modalRef: BsModalRef;
+  reportBugForm: FormGroup;
+
   projects: any = [
     {
       id: 1,
@@ -63,11 +69,38 @@ export class GalleryComponent implements OnInit {
     },
   ];
 
-  constructor() {
+  constructor(private modalService: BsModalService, private fb: FormBuilder) {
     document.body.style.overflow = 'auto';
-   }
-
-  ngOnInit(): void {
   }
 
+  ngOnInit(): void {
+    this.createReportBugForm();
+  }
+
+  createReportBugForm() {
+    this.reportBugForm = this.fb.group({
+      project: [null, Validators.required],
+      title: [null, Validators.required],
+      description: [null, Validators.required]
+    });
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template,
+      {
+        class: 'modal-dialog-centered'
+      });
+  }
+
+  closeModal() {
+    this.modalRef.hide();
+  }
+
+  reportBug() {
+    if (this.reportBugForm.valid) {
+      console.log(this.reportBugForm.value);
+      this.closeModal();
+      this.reportBugForm.reset();
+    }
+  }
 }

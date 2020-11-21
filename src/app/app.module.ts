@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgxUiLoaderModule, NgxUiLoaderConfig } from 'ngx-ui-loader';
 import { LightboxModule } from 'ngx-lightbox';
 
@@ -60,6 +61,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     LightboxModule,
     ModalModule.forRoot()

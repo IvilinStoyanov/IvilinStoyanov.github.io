@@ -1,10 +1,10 @@
 <div class="wrapper mb-2">
     <div class="section-title">
         <h2 class="theme">PHOTOSHOP MANIPULATIONS</h2>
+    </div>
     <div class="gallery" id="gallery">
         <div *ngFor="let image of images; let i = index" class="mb-3 pics animation">
             <img class="img-fluid" src="{{image.src}}" (click)="open(i)"
                 alt="wallpaper image">
         </div>
     </div>
-</div>

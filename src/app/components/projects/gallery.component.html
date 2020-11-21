@@ -1,15 +1,62 @@
+<div class="wrapper">
+  <div class="section-title">
+    <h2 class="theme">PROJECTS</h2>
+  </div>
+  <div class="text-right">
+    <button class="btn btn-outline-info" (click)="openModal(template)">Report bug<i
+        class="icofont-bug ml-1"></i></button>
+  </div>
+</div>
 <section class="masonry">
   <figure *ngFor="let project of projects" class="cell cell--{{project.id}}">
-    <img
-      src="{{project.img}}"
-      alt="{{project.alt}}">
-      <div class="text-centre project-heading">
-        <p class="text-muted mb-0">{{project.subtext}}</p>
-        <h4 class="theme">{{project.name}}</h4>
-        <div class="d-flex">
+    <img src="{{project.img}}" alt="{{project.alt}}">
+    <div class="text-centre project-heading">
+      <p class="text-muted mb-0">{{project.subtext}}</p>
+      <h4 class="theme">{{project.name}}</h4>
+      <div class="d-flex">
         <button class="btn btn-primary-outline mr-2 " [routerLink]="[project.detailsLink]">Details</button>
         <a class="btn btn-outline-info" href="{{project.projectLink}}" target="_blank">View Project</a>
       </div>
-      </div>
+    </div>
   </figure>
 </section>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Report a bug</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- dropdown -->
+    <form [formGroup]="reportBugForm" (ngSubmit)="reportBug()">
+      <div class="form-group">
+        <label for="projects">Select project <span class="text-danger">*</span></label>
+        <select class="form-control" id="projects" formControlName="project">
+          <option value="" selected hidden>Choose here</option>
+          <option *ngFor="let project of projects">{{project.name}}</option>
+        </select>
+      </div>
+      <!-- title -->
+      <div class="form-group">
+        <label for="title">Title <span class="text-danger">*</span></label>
+        <input type="title" class="form-control" id="title" formControlName="title" aria-describedby="title">
+      </div>
+      <!-- description -->
+      <div class="form-group">
+        <label for="description">Description <span class="text-danger">*</span></label>
+        <textarea class="form-control" id="description" rows="3" spellcheck="false"
+          formControlName="description"></textarea>
+      </div>
+      <!-- buttons -->
+      <div class="d-flex justify-content-between">
+        <div><small id="emailHelp" class="form-text text-muted"><span class="text-danger">*</span> field is required.</small>
+        </div>
+        <div>
+          <button class="btn btn-primary-outline">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
